@@ -1,3 +1,8 @@
+import sys
+import os
+
+# Додаємо кореневу директорію проєкту до шляхів пошуку
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import unittest
 from selenium import webdriver
 from pages.home_page import HomePage
