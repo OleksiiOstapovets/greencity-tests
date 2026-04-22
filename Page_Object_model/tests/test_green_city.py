@@ -1,9 +1,3 @@
-import sys
-import os
-# Get the path to the parent directory (Page_Object_model)
-current_dir = os.path.dirname(__file__)
-parent_dir = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir))
-sys.path.append(parent_dir)
 import unittest
 from selenium import webdriver
 from pages.home_page import HomePage
