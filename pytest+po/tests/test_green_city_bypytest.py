@@ -25,7 +25,6 @@ def home_page(driver):
     home.switch_to_english()
     return home
 
-# Тести тепер просто функції, які приймають фікстури як аргументи
 def test_filter_eco_news_initiatives(driver, home_page):
     home_page.go_to_eco_news()
     eco_page = EcoNewsPage(driver)
