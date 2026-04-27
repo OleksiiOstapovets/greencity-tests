@@ -1,20 +1,22 @@
 import allure
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
+from selenium.webdriver.common.by import By
+from time import sleep
+
 
 class BasePage:
+
+    eco_news_link_locator = (By.XPATH, "//header//a[contains(@class, 'url-name') and contains(., 'Еко новини') or contains(., 'Eco news')]")
+    language_switcher = (By.XPATH, "//ul[@aria-label='language switcher']")
+    language_en_option = (By.XPATH, ".//span[contains(text(), 'En')]")
+    language_ua_option = (By.XPATH, ".//span[contains(text(), 'Uk')]")
+
+    eco_news_link_locator = (By.XPATH, "//header//a[contains(@class, 'url-name') and contains(., 'Еко новини') or contains(., 'Eco news')]")
+    events_link_locator = (By.XPATH, "//header//a[contains(@class, 'url-name') and contains(., 'Події') or contains(., 'Events')]")
+
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
 
-    @allure.step("Клік на елемент з локатором: {locator}")
-    def click(self, locator):
-        self.wait.until(EC.element_to_be_clickable(locator)).click()
-
-    @allure.step("Пошук елемента: {locator}")
-    def find(self, locator):
-        return self.wait.until(EC.presence_of_element_located(locator))
-
-    @allure.step("Пошук списку елементів: {locator}")
-    def finds(self, locator):
-        return self.wait.until(EC.presence_of_all_elements_located(locator))
+    @allure.step("Get Eco news button")
+    def get_eco_news_button(self):
+        return self.driver.find_element(*self.eco_news_link_locator)
