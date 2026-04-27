@@ -3,18 +3,26 @@ from selenium.webdriver.common.by import By
 from .base_page import BasePage
 
 class EventsPage(BasePage):
-    FILTER_BUTTON = (By.XPATH, "//*[name()='path' and contains(@class, 'ng-tns')]")
-    UPCOMING_FILTER = (By.XPATH, "//span[contains(text(), 'Upcoming')]")
-    EVENTS = (By.XPATH, "//div[contains(@class, 'card')]")
+    Filter_button_locator = (By.XPATH, "//*[name()='path' and contains(@class, 'ng-tns')]")
+    Upcoming_filter_button_locator = (By.XPATH, "//span[contains(text(), 'Upcoming')]")
+    Events = (By.XPATH, "//div[contains(@class, 'card')]")
 
-    @allure.step("Відкриття фільтра")
+    @allure.step("Get filter button")
+    def get_filter_button(self):
+        return self.driver._find(*self.Filter_button_locator)
+
+    @allure.step("Open filter")
     def open_filter(self):
-        self.click(self.FILTER_BUTTON)
+        self.get_filter_button().click()
 
-    @allure.step("Вибір фільтра 'Upcoming'")
+    @allure.step("Get 'Upcoming' filter button")
+    def get_upcoming_filter_button(self):
+        return self.driver._find(*self.Upcoming_filter_button_locator)
+
+    @allure.step("Choose 'Upcoming' filter")
     def choose_upcoming(self):
-        self.click(self.UPCOMING_FILTER)
+        self.get_upcoming_filter_button().click()
 
-    @allure.step("Отримання списку подій")
+    @allure.step("Get events list")
     def get_events(self):
-        return self.finds(self.EVENTS)
+        return self.finds(self.Events)
