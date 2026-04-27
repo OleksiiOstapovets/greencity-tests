@@ -1,7 +1,7 @@
 import pytest
 import allure
 from selenium import webdriver
-from pages.home_page import HomePage
+from pages.base_page import BasePage
 
 @pytest.fixture
 def driver():
@@ -17,6 +17,6 @@ def driver():
 
 @pytest.fixture
 def home_page(driver):
-    home = HomePage(driver)
+    home = BasePage(driver)
     home.switch_to_english()
     return home

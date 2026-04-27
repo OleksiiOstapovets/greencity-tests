@@ -1,6 +1,5 @@
 import pytest
 from selenium import webdriver
-from pages.home_page import HomePage
 from pages.eco_news_page import EcoNewsPage
 from pages.events_page import EventsPage
 from pages.ubs_page import UBSPage

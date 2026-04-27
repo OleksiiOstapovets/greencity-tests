@@ -3,27 +3,21 @@ import allure
 from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.support import expected_conditions as EC
+from components.base_component import BaseComponent
 
-class BasePage:
+class BasePage(BaseComponent):
 
     eco_news_link_locator = (By.XPATH, "//a[contains(text(), 'Eco')]")
     events_link_locator = (By.XPATH, "//a[contains(text(), 'Events')]")
     ubs_link_locator = (By.XPATH, "//a[contains(text(), 'UBS')]")
-
 
     language_switcher = (By.XPATH, "//ul[@aria-label='language switcher']")
     language_en_option = (By.XPATH, ".//span[contains(text(), 'En')]")
     language_ua_option = (By.XPATH, ".//span[contains(text(), 'Uk')]")
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
-    def _find(self, locator):
-        return self.wait.until(EC.presence_of_element_located(locator))
-    
-    def finds(self, locator):
-        return self.wait.until(EC.presence_of_all_elements_located(locator))
-    
     @allure.step("Get language switcher")
     def get_language_switcher(self):
         return self.driver._find(*self.language_switcher)
