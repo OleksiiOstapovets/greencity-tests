@@ -3,12 +3,12 @@ from selenium.webdriver.common.by import By
 from .base_page import BasePage
 
 class EcoNewsPage(BasePage):
-    filter_initiatives = (By.XPATH, "//span[contains(., 'Initiative')]")
+    filter_initiatives_locator = (By.XPATH, "//span[contains(., 'Initiative')]")
     News = (By.XPATH, "//div[contains(@class, 'list')]")
     
     @allure.step("Get 'Initiative' filter")
     def get_filter_initiatives(self):
-        return self.driver._find(*self.filter_initiatives)
+        return self._find(*self.filter_initiatives_locator)
 
     @allure.step("Open 'Initiative' filter")
     def open_filter_initiatives(self):

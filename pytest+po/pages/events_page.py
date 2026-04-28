@@ -9,7 +9,7 @@ class EventsPage(BasePage):
 
     @allure.step("Get filter button")
     def get_filter_button(self):
-        return self.driver._find(*self.Filter_button_locator)
+        return self._find(*self.Filter_button_locator)
 
     @allure.step("Open filter")
     def open_filter(self):
@@ -17,7 +17,7 @@ class EventsPage(BasePage):
 
     @allure.step("Get 'Upcoming' filter button")
     def get_upcoming_filter_button(self):
-        return self.driver._find(*self.Upcoming_filter_button_locator)
+        return self._find(*self.Upcoming_filter_button_locator)
 
     @allure.step("Choose 'Upcoming' filter")
     def choose_upcoming(self):

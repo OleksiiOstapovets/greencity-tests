@@ -8,7 +8,7 @@ class UBSPage(BasePage):
 
     @allure.step("Get 'Sorting rules' button")
     def get_sorting_rules_button(self):
-        return self.driver._find(*self.Sorting_rules_button_locator)
+        return self._find(*self.Sorting_rules_button_locator)
 
     @allure.step("Open sorting rules")
     def open_sorting_rules(self):
@@ -16,4 +16,4 @@ class UBSPage(BasePage):
 
     @allure.step("Get page title")
     def get_title(self):
-        return self.find(self.Title)
+        return self._find(*self.Title)

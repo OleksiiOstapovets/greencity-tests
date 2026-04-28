@@ -20,16 +20,16 @@ class BasePage(BaseComponent):
 
     @allure.step("Get language switcher")
     def get_language_switcher(self):
-        return self.driver._find(*self.language_switcher)
+        return self._find(*self.language_switcher)
     
     @allure.step("Switch to {language}")
     def switch_language(self, language):
         language_switcher = self.get_language_switcher()
         language_switcher.click()
         if language.lower() == "en":
-            language_option = self.driver._find(*self.language_en_option)
+            language_option = self._find(*self.language_en_option)
         elif language.lower() == "ua":
-            language_option = self.driver._find(*self.language_ua_option)
+            language_option = self._find(*self.language_ua_option)
         else:
             raise ValueError("Unsupported language: {}".format(language))
         language_option.click()
@@ -37,15 +37,15 @@ class BasePage(BaseComponent):
 
     @allure.step("Get Eco news button")
     def get_eco_news_button(self):
-        return self.driver._find(*self.eco_news_link_locator)
+        return self._find(*self.eco_news_link_locator)
     
     @allure.step("Get Events button")
     def get_events_button(self):
-        return self.driver._find(*self.events_link_locator)
+        return self._find(*self.events_link_locator)
     
     @allure.step("Get UBS button")
     def get_ubs_button(self):
-        return self.driver._find(*self.ubs_link_locator)
+        return self._find(*self.ubs_link_locator)
 
     @allure.step("Navigate to Eco News")
     def navigate_to_eco_news(self):
