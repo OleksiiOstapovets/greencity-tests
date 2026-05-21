@@ -1,60 +1,56 @@
-import sys
-import os
-
-# Додаємо кореневу директорію проєкту до шляхів пошуку
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-import unittest
-from selenium import webdriver
-from pages.home_page import HomePage
+import pytest
+import allure
+from pages.base_page import BasePage
 from pages.eco_news_page import EcoNewsPage
 from pages.events_page import EventsPage
 from pages.ubs_page import UBSPage
 
-class TestGreenCity(unittest.TestCase):
-    BASE_URL = "https://www.greencity.cx.ua/#/greenCity"
+@allure.epic("Green City Web Interface")
+@allure.feature("Content Filtering and Navigation")
+class TestGreenCity:
 
-    def setUp(self):
-        self.driver = webdriver.Chrome()
-        self.driver.maximize_window()
-        self.driver.get(self.BASE_URL)
+    @allure.title("Filter Eco News by Initiatives")
+    @allure.description("Verify that the user can filter news items by the 'Initiative' category on the Eco News page.")
+    @allure.tag("Regression", "EcoNews")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_filter_eco_news_initiatives(self, driver, base_page):
 
-        self.home = HomePage(self.driver)
-        self.home.switch_to_english()
+        home = BasePage(driver)
+        home.navigate_to_eco_news()
+        
+        eco_page = EcoNewsPage(driver)
+        eco_page.open_filter_initiatives()
+        
+        with allure.step("Verify that at least one news item is displayed"):
+            news = eco_page.get_news()
+            assert len(news) > 0, "No news items found for 'Initiative' filter"
 
-    def tearDown(self):
-        self.driver.quit()
-
-    # 🔹 Test 1
-    def test_filter_eco_news_initiatives(self):
-        self.home.go_to_eco_news()
-
-        eco_page = EcoNewsPage(self.driver)
-        eco_page.filter_initiatives()
-
-        news = eco_page.get_news()
-        self.assertTrue(len(news) > 0)
-
-    # 🔹 Test 2
-    def test_filter_events_upcoming(self):
-        self.home.go_to_events()
-
-        events_page = EventsPage(self.driver)
+    @allure.title("Filter Upcoming Events")
+    @allure.description("Verify that the 'Upcoming' filter correctly displays future events.")
+    @allure.tag("Smoke", "Events")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_filter_events_upcoming(self, driver, base_page):
+        home = BasePage(driver)
+        home.navigate_to_events()
+        
+        events_page = EventsPage(driver)
         events_page.open_filter()
         events_page.choose_upcoming()
+        
+        with allure.step("Verify that the list of events is not empty"):
+            events = events_page.get_events()
+            assert len(events) > 0, "The upcoming events list should not be empty"
 
-        events = events_page.get_events()
-        self.assertTrue(len(events) > 0)
-
-    # 🔹 Test 3
-    def test_ubs_sorting_rules(self):
-        self.home.go_to_ubs()
-
-        ubs_page = UBSPage(self.driver)
+    @allure.title("Check UBS Sorting Rules Visibility")
+    @allure.description("Navigate to the UBS page and ensure that the 'Sorting Rules' section is accessible and titled correctly.")
+    @allure.tag("UBS", "UI")
+    def test_ubs_sorting_rules(self, driver, base_page):
+        home = BasePage(driver)
+        home.navigate_to_ubs()
+        
+        ubs_page = UBSPage(driver)
         ubs_page.open_sorting_rules()
-
-        title = ubs_page.get_title()
-        self.assertTrue(title.is_displayed())
-
-
-if __name__ == "__main__":
-    unittest.main()
+        
+        with allure.step("Verify the visibility of the Sorting Rules title"):
+            title = ubs_page.get_title()
+            assert title.is_displayed(), "Sorting rules title is not displayed"
